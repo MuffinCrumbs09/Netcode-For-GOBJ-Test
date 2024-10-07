@@ -15,6 +15,7 @@ public class PlayerHealth : NetworkBehaviour, IDamageable
     public void Damage(float damage)
     {
         SetHealth(-damage);
+        Debug.Log(transform.name + " took damage");
     }
 
     private void SetHealth(float amount)
@@ -23,9 +24,12 @@ public class PlayerHealth : NetworkBehaviour, IDamageable
         if(_health <= 0)
         {
             DeadRpc();
+            transform.position = new Vector3(0, 1, 0);
+            AliveRpc();
         }
     }
 
-    [Rpc(SendTo.NotMe)] public void DeadRpc() => gameObject.SetActive(false);
+    [Rpc(SendTo.Everyone)] public void DeadRpc() => gameObject.SetActive(false);
+    [Rpc(SendTo.Everyone)] public void AliveRpc() => gameObject.SetActive(true);
 
 }

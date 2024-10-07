@@ -26,7 +26,20 @@ public class PlayerSpawner : NetworkBehaviour
             {
                 GameObject _player = Instantiate(player);
                 _player.GetComponent<NetworkObject>().SpawnAsPlayerObject(id, true);
+                RenamePlayerRpc();
             }
+        }
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void RenamePlayerRpc()
+    {
+        GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject _player in _players)
+        {
+            ulong id = _player.GetComponent<NetworkBehaviour>().OwnerClientId;
+            _player.name = string.Format("Player {0}", id);
         }
     }
 }

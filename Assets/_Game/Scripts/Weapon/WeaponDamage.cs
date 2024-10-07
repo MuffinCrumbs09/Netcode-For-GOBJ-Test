@@ -30,7 +30,7 @@ public class WeaponDamage : NetworkBehaviour
                 lr.GetComponent<LineRenderer>().SetPosition(0, transform.position);
                 lr.GetComponent<LineRenderer>().SetPosition(1, hitInfo.point);
 
-                ShootRpc(hitInfo.transform.name, transform.position, hitInfo.point);
+                ShootRpc(hitInfo.transform.name, transform.position, hitInfo.point, 100);
             }
         }
         SoundManager.PlaySound(SoundType.SHOOT, 0.8f);
@@ -44,5 +44,13 @@ public class WeaponDamage : NetworkBehaviour
         GameObject lr = Instantiate(bulletTrail, startPos, bulletTrail.transform.rotation);
         lr.GetComponent<LineRenderer>().SetPosition(0, startPos);
         lr.GetComponent<LineRenderer>().SetPosition(1, endPos);
+
+        GameObject _hit = GameObject.Find(hit);
+        if (_hit == null) return;
+
+        if (_hit.TryGetComponent<NetworkBehaviour>(out NetworkBehaviour _net) && _net.IsLocalPlayer)
+        {
+            _hit.GetComponent<PlayerHealth>().Damage(damage);
+        }
     }
 }

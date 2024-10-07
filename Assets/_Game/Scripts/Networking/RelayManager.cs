@@ -16,6 +16,7 @@ public class RelayManager : MonoBehaviour
     [SerializeField] Button hostButton;
     [SerializeField] Button joinButton;
     [SerializeField] Button startButton;
+    [SerializeField] Button quitButton;
     [SerializeField] TMP_InputField joinInput;
     [SerializeField] TextMeshProUGUI codeText;
 
@@ -32,6 +33,7 @@ public class RelayManager : MonoBehaviour
 
         hostButton.onClick.AddListener(CreateRelay);
         joinButton.onClick.AddListener(() => JoinRelay(joinInput.text));
+        quitButton.onClick.AddListener(QuitLobby);
 
         startButton.onClick.AddListener(StartGame);
     }
@@ -76,9 +78,21 @@ public class RelayManager : MonoBehaviour
         inLobby.gameObject.SetActive(true);
     }
 
+    private void InMenu()
+    {
+        mainMenu.gameObject.SetActive(true);
+        inLobby.gameObject.SetActive(false);
+    }
+
     public void StartGame()
     {
         NetworkManager.Singleton.SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+    }
+
+    public void QuitLobby()
+    {
+        NetworkManager.Singleton.Shutdown();
+        InMenu();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

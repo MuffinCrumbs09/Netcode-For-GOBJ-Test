@@ -42,9 +42,10 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-
         if (IsOwner)
+        {
             transform.position = new Vector3(0, 1, 0);
+        }
     }
 
     [Rpc(SendTo.Server)] private void UpdatePlayerPositionRpc(float x,  float y, float z) => Position.Value = new Vector3(x, y, z);
