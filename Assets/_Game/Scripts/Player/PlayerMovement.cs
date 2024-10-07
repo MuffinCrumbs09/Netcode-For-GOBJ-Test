@@ -66,6 +66,7 @@ public class PlayerMovement : NetworkBehaviour
         if (IsLocalPlayer)
         {
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            _rb.isKinematic = OnSlope() && InputReader.Instance.MovementValue == Vector2.zero;
 
             transform.rotation = orientation.rotation;
 
@@ -98,8 +99,9 @@ public class PlayerMovement : NetworkBehaviour
 
     private void ControlSpeed()
     {
-        if (InputReader.Instance.IsSprint && _isGrounded) moveSpeed = Mathf.Lerp(moveSpeed, sprintSpeed, aceleration * Time.deltaTime);
-        else moveSpeed = Mathf.Lerp(moveSpeed, walkSpeed, aceleration * Time.deltaTime);
+        if (InputReader.Instance.IsSprint && InputReader.Instance.MovementValue != Vector2.zero && _isGrounded) moveSpeed = Mathf.Lerp(moveSpeed, sprintSpeed, aceleration * Time.deltaTime);
+        else if (InputReader.Instance.MovementValue != Vector2.zero) moveSpeed = Mathf.Lerp(moveSpeed, walkSpeed, aceleration * Time.deltaTime);
+        else moveSpeed = 0f;
     }
 
     private void ControlDrag()
@@ -137,7 +139,6 @@ public class PlayerMovement : NetworkBehaviour
         if(InputReader.Instance == null) return;
         InputReader.Instance.JumpEvent += Jump;
     }
-
     private void OnDisable()
     {
         InputReader.Instance.JumpEvent -= Jump;

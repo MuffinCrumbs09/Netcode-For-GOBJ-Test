@@ -1,13 +1,14 @@
 using Unity.Netcode;
 using UnityEngine;
 
+// How the player moves the camera
 public class PlayerLook : NetworkBehaviour
 {
     [Header("References")]
     [SerializeField] private WallRun _wallRun;
     [SerializeField] Transform orientation;
 
-    [Header("Settings")]
+    [Header("Settings - Sens")]
     [SerializeField] private float sensX;
     [SerializeField] private float sensY;
 
@@ -21,6 +22,7 @@ public class PlayerLook : NetworkBehaviour
     float xRotation;
     float yRotation;
 
+    // If client doesn't own this, disable me
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) enabled = false;
@@ -36,10 +38,12 @@ public class PlayerLook : NetworkBehaviour
     {
         MyInput();
 
+        // Rotates the cam (X, Y, Z) and player (Y)
         _cam.rotation = Quaternion.Euler(xRotation, yRotation, _wallRun.tilt);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
+    // Reads input from input reader.
     private void MyInput()
     {
         _mouseX = InputReader.Instance.LookValueX;

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Handles all input
 public class InputReader : MonoBehaviour, Controls.IPlayerActions
 {
     public static InputReader Instance;
@@ -23,7 +24,7 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
 
     private void Awake()
     {
-        //If there is an instance that isnt me, delete me
+        //If there is an instance that isnt me, kill me
         if(Instance != null &&  Instance != this)
             Destroy(this);
 
@@ -33,17 +34,14 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
 
     private void Start()
     {
-        //Cursor (Disabled for now)
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
-
         //Create controls and set its callback to this
         _controls = new Controls();
         _controls.Player.SetCallbacks(this);
-        //Enable player controls
+        
         ToggleControls(true);
     }
 
+    // Enable or Disable controls
     public void ToggleControls(bool toggle)
     {
         if (toggle)
@@ -52,9 +50,10 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
             _controls.Player.Disable();
     }
 
+    // Enable or Disable mouse
     public void ToggleMouse(bool toggle)
     {
-        if(toggle)
+        if (toggle)
         {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;

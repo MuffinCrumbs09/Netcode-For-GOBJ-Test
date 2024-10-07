@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// Handles non-network main menu buttons
 public class Buttons : MonoBehaviour
 {
     [Header("Settings")]
@@ -8,8 +9,11 @@ public class Buttons : MonoBehaviour
 
     private void Start()
     {
+        // Setup buttons
         quitGame.onClick.AddListener(QuitGame);
     }
+    
+    // Quit application
     public void QuitGame()
     {
         Application.Quit();

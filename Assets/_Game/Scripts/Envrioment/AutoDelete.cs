@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Delete gameObject after lifeTime
 public class AutoDelete : MonoBehaviour
 {
     [Header("Settings")]

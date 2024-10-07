@@ -4,8 +4,10 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Spawns the players upon loading the scene
 public class PlayerSpawner : NetworkBehaviour
 {
+    // Player reference
     [SerializeField] private GameObject player;
 
     private void Start()
@@ -13,6 +15,7 @@ public class PlayerSpawner : NetworkBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    // On spawn, whenever a scene is loaded, run "SceneLoaded"
     public override void OnNetworkSpawn()
     {
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneLoaded;
@@ -20,6 +23,7 @@ public class PlayerSpawner : NetworkBehaviour
 
     private void SceneLoaded(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
+        // If Host and in correct scene, Instantiate all players
         if(IsHost && sceneName == "SampleScene")
         {
             foreach (ulong id in clientsCompleted)
@@ -31,8 +35,8 @@ public class PlayerSpawner : NetworkBehaviour
         }
     }
 
-    [Rpc(SendTo.Everyone)]
-    public void RenamePlayerRpc()
+    // Names players "Player X" where X = clientID for everyone
+    [Rpc(SendTo.Everyone)] public void RenamePlayerRpc()
     {
         GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
 

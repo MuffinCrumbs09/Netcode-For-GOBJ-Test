@@ -9,7 +9,7 @@ public class WallRun : NetworkBehaviour
 
     [Header("Detection")]
     [SerializeField] private float wallDistance = .6f;
-    [SerializeField] private float minJumpHeight = 1.5f;
+    [SerializeField] [Min(1.1f)] private float minJumpHeight = 1.5f;
 
     [Header("Wall Running")]
     [SerializeField] private float wallRunGravity = 1f;

@@ -853,7 +853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1247425537
+  GlobalObjectIdHash: 1065301077
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -885,7 +885,7 @@ MonoBehaviour:
   orientation: {fileID: 6848791286890177468}
   walkSpeed: 4
   sprintSpeed: 6
-  aceleration: 10
+  aceleration: 2.5
   jumpForce: 2.5
   groundDistance: 0.4
   groundMask:
@@ -930,8 +930,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   orientation: {fileID: 6848791286890177468}
   wallDistance: 0.6
-  minJumpHeight: 1.5
-  wallRunGravity: 1
+  minJumpHeight: 1.1
+  wallRunGravity: 0.5
   wallRunJumpForce: 125
   fov: 90
   wallRunFov: 100

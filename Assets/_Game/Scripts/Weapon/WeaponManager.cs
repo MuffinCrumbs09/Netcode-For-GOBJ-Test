@@ -1,23 +1,23 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+// Handles shooting the gun
 public class WeaponManager : MonoBehaviour
 {
     public UnityEvent OnGunShoot;
-    public float fireCooldown;
 
+    public float fireCooldown;
     public bool automatic;
 
     private float _curCooldown;
 
     private void OnEnable()
     {
-        InputReader.Instance.FireEvent += FireSingle;
+        InputReader.Instance.FireEvent += Fire;
     }
-
     private void OnDisable()
     {
-        InputReader.Instance.FireEvent -= FireSingle;
+        InputReader.Instance.FireEvent -= Fire;
     }
 
     private void Start()
@@ -27,25 +27,23 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
+        // Keeps InputReader and this in sync
         InputReader.Instance.IsAuto = automatic;
 
+        // If you click, fire
         if(InputReader.Instance.IsFire)
-            FireAuto();
+            Fire();
 
         _curCooldown -= Time.deltaTime;
     }
-    private void FireAuto()
+
+    // Now were shooting, kinda
+    private void Fire()
     {
+        // If its too soon, return
         if(_curCooldown > 0f) return;
 
-        OnGunShoot?.Invoke();
-        _curCooldown = fireCooldown;
-    }
-
-    private void FireSingle()
-    {
-        if (_curCooldown > 0f) return;
-
+        // Try running OnGunShoot, and reset cooldown
         OnGunShoot?.Invoke();
         _curCooldown = fireCooldown;
     }
