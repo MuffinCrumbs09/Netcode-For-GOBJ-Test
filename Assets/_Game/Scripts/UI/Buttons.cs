@@ -7,6 +7,7 @@ public class Buttons : MonoBehaviour
     [Header("Settings - Buttons")]
     [SerializeField] private Button quitButton;
     [SerializeField] private Button menuButton;
+    [SerializeField] private Button cosButton;
 
     [Header("Settings - Canvas")]
     [SerializeField] private Canvas cosmeticCanvas;
@@ -16,7 +17,8 @@ public class Buttons : MonoBehaviour
     {
         // Setup buttons
         quitButton.onClick.AddListener(QuitGame);
-        menuButton.onClick.AddListener(MainMenu);
+        menuButton.onClick.AddListener(() => SwitchCanvas(cosmeticCanvas, menuCanvas));
+        cosButton.onClick.AddListener(() => SwitchCanvas(menuCanvas, cosmeticCanvas));
     }
     
     // Quit application
@@ -25,9 +27,9 @@ public class Buttons : MonoBehaviour
         Application.Quit();
     }
 
-    public void MainMenu()
+    public void SwitchCanvas(Canvas curCanvas, Canvas newCanvas)
     {
-        cosmeticCanvas.gameObject.SetActive(false);
-        menuCanvas.gameObject.SetActive(true);
+        curCanvas.gameObject.SetActive(false);
+        newCanvas.gameObject.SetActive(true);
     }
 }

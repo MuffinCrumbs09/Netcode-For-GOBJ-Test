@@ -15,6 +15,7 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public bool IsSprint {  get; private set; }
     public bool IsFire {  get; private set; }
     public bool IsAuto;
+    public int cosID = -1;
     #endregion
 
     #region Events

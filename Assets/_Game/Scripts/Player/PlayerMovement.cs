@@ -45,11 +45,25 @@ public class PlayerMovement : NetworkBehaviour
         if (IsOwner)
         {
             transform.position = new Vector3(0, 1, 0);
+
+            int id = InputReader.Instance.cosID;
+            if (id == -1) return;
+            SpawnCosmeticRpc(id);
         }
     }
 
     [Rpc(SendTo.Server)] private void UpdatePlayerPositionRpc(float x,  float y, float z) => Position.Value = new Vector3(x, y, z);
     [Rpc(SendTo.Server)] private void UpdatePlayerRotationRpc(Quaternion rotation) => Rotation.Value = rotation;
+
+    [Rpc(SendTo.NotMe)] private void SpawnCosmeticRpc(int id)
+    {
+        CosmeticScriptableObject _cos = CosmeticHolder.Instance.Cosmetics[id];
+        GameObject _cosOBJ = Instantiate(_cos.Cosmetic, Vector3.zero, Quaternion.identity);
+
+        _cosOBJ.transform.parent = transform;
+        _cosOBJ.transform.localPosition = _cos.Offset;
+        _cosOBJ.transform.localEulerAngles = Vector3.zero;
+    }
 
     private void Start()
     {

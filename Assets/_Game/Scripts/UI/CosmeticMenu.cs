@@ -14,9 +14,6 @@ public class CosmeticMenu : MonoBehaviour
     [SerializeField] private TMP_FontAsset font;
     [SerializeField] private Button removeCosmetic;
 
-    [Header("Cosmetics")]
-    public CosmeticScriptableObject[] cosmetics;
-
     private void Start()
     {
         removeCosmetic.onClick.AddListener(RemoveCosmetic);
@@ -25,9 +22,9 @@ public class CosmeticMenu : MonoBehaviour
         float initialYPosition = 350f; // The starting Y position for the first button
 
         // Create the buttons dynamically
-        for (int i = 0; i < cosmetics.Length; i++)
+        for (int i = 0; i < CosmeticHolder.Instance.Cosmetics.Length; i++)
         {
-            var cosmetic = cosmetics[i];
+            var cosmetic = CosmeticHolder.Instance.Cosmetics[i];
 
             GameObject _cosmeticButton = new GameObject("CosmeticButton_" + i, typeof(RectTransform));
             GameObject _cosmeticText = new GameObject("CosmeticText_" + i, typeof(RectTransform));
@@ -68,10 +65,12 @@ public class CosmeticMenu : MonoBehaviour
     public void AddCosmetic(int id)
     {
         if (CheckForCosmetic()) return;
-        GameObject _cosmetic = Instantiate(cosmetics[id].Cosmetic);
+        GameObject _cosmetic = Instantiate(CosmeticHolder.Instance.Cosmetics[id].Cosmetic);
         _cosmetic.transform.parent = player.transform;
-        _cosmetic.transform.localPosition = cosmetics[id].Offset;
+        _cosmetic.transform.localPosition = CosmeticHolder.Instance.Cosmetics[id].Offset;
         _cosmetic.transform.localEulerAngles = Vector3.zero;
+
+        InputReader.Instance.cosID = id;
     }
 
     private bool CheckForCosmetic()
@@ -97,6 +96,8 @@ public class CosmeticMenu : MonoBehaviour
             var child = player.transform.GetChild(i);
             if (child.CompareTag("Cosmetic")) Destroy(child.gameObject);
         }
+
+        InputReader.Instance.cosID = -1;
     }
 
     private void OnDisable()
