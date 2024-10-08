@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 196d995867c448942b5edf7398309680, type: 3}
+  m_Name: Shark Hat
+  m_EditorClassIdentifier: 
+  ID: 5
+  Name: Shark Hat
+  Cosmetic: {fileID: 3341362907125059808, guid: c0c80830401fe5a43a3a8a876c6f03cf, type: 3}
+  Offset: {x: 0, y: 0.3, z: 0}
